@@ -1,560 +1,540 @@
 
 /*
-kotlinc 01KotlinNature.kt -include-runtime -d nature.jar
-java -jar nature.jar
-*/
-
-package learnKotlin
-
-import java.util.TreeMap
-
-// ____________________________________________________________
-// Complete Following Code And On Completetion RAISE YOUR HAND!!!!
-
-// Function
-//		Takes No Argument
-//		Returns Unit Value of Unit Type 
-
-fun helloWorld() {
-	println("Hello World!")
-}
-
-// _________________________________________________________________
-// Complete Following Experiment And On Completion RAISE YOUR HAND!!
-// Function
-//		Takes Two Argument Of Type Int
-//		Return Value of Int Type
-
-fun max(a : Int, b : Int) : Int {
-	// with if-else construct
-	// Can You Do Following Line Of Code In Java/C/C++ ????
-	// Statement : Any Line of Code Which Is Executable
-	// Expression Is A Statement with Return Value
-
-	// if-else Construct
-	// In Kotlin Is An Expression
-	// In Java/C/C++ Is A Statement
-
-	return if ( a > b ) a else b
-	// if ( a > b ) return a; else return b;
-}
-
-// Kotlin Design Principle
-//		Designed Towards Expressivness
-//		Desgined Towards Brevity Over Verbosness
-
-// Functions Are First Class Citizen
-// Functions Can Be Assigned Expressions
-fun maximum(a : Int, b : Int) = if ( a > b ) a else b
-
-fun playWithMax() {
-	println( max(100, 200) )
-	println( max(100, -200) )
-
-	println( maximum(100, 200) )
-	println( maximum(100, -200) )
-}
-
-// _________________________________________________________________
-// Complete Following Experiment and Then RAISE YOUR HAND!!
-
-// Design Principle
-//		Design Towards Immutability Rather Than Towards Mutability
-
-// Created Type Person Having Two Properties name And isMarried
-
-// Kotlin Compiler Will Generate Following Things For You
-// 1. Will Generate Constructor i.e. Memberwise Inititalizer
-// 2. Will Generate Getters and Setters for Two Properties
-//		name Property Only Getter Generated
-//		isMarried Property Both Getter and Setter Generated
-// 3. Will Generate Member Fields/Variables for Two Properties
-
-// val means Immutable and var for Mutbale Property
-
-//				Constructor Definition With Two Arguments
-class Person(val name: String, var isMarried: Boolean) 
-
-fun playWithPerson() {
-	val person = Person("Alice", false) // Constructor Call
-
-	// Compiler Will Convert person.name to person.getName()
-	println(person.name) 
-
-	// Compiler Will Convert person.isMarried to person.getIsMarried()
-	println(person.isMarried)
-	
-	// name is Immutable
-	// person.name = "Alice Carol" // 76:2: error: val cannot be reassigned
-	person.isMarried = true  // person.setIsMarried( true )
-
-	println(person.name)
-	println(person.isMarried)
-
-//	person = Person("Mr. Bob", true)
-}
-
-// _________________________________________________________________
-// Complete Following Experiment And On Completion RAISE YOUR HAND!!
-
-// Created Type Rectangle Having Three Properties height, width and isSquare
-
-// Kotlin Compiler Will Generate Following Things For You
-// 1. Will Generate Constructor i.e. Memberwise Inititalizer
-// 2. Will Generate Getters and Setters for Three Properties
-//		height and width Property Only Getter Generated
-//		height, width and isSquare Property Doesn't Have Setter Generated
-//			Because It's Immutable Properties
-// 3. Will Generate Member Fields/Variables for Two Properties
-//				Constructor Definition With Two Member Arguments
-class Rectangle(val height: Int, val width: Int) {
-	val isSquare: Boolean // Computed Property
-		get() { 		  // Custom Getter
-			return height == width
-		}
-}
-// Complete Following Experiment And On Completion RAISE YOUR HAND!!
-class Rectangle1(val height: Int, val width: Int) {
-	val isSquare: Boolean // Computed Property
-		get() = height == width  		  // Custom Getter
-			
-}
-
-fun playWithRectangle() {
-	var rectangle = Rectangle(100, 200)
-	println(rectangle.height)
-	println(rectangle.width)
-	println(rectangle.isSquare)
-
-	rectangle = Rectangle(288, 288)
-	println(rectangle.height)
-	println(rectangle.width)
-	println(rectangle.isSquare)
-
-	val rectangle1 = Rectangle1(400, 400)
-	println(rectangle1.height)
-	println(rectangle1.width)
-	println(rectangle1.isSquare)
-}
-
-// _________________________________________________________________
-// Complete Following Experiment And On Completion RAISE YOUR HAND!!
-
-// Design Principle
-//		Design Towards Deterministic Systems Rather Non Deterministic System
-//		Definition Driven
-//		Write Type Safe Code
-//		BEST PRACTICE
-//			Prefer All Branches Rather Than else Block
-
-// Creating Colour Type
-//		Range Of Colour Type = { RED, GREEN, BLUE }
-enum class Colour {
-	RED, GREEN, BLUE, YELLOW, ORGANGE, UNKOWN
-}
-
-fun getColourString( colour: Colour) : String {
-	// In Kotlin when Is An Type Safe Expression
-	// In Java switch Is A Statement and It's Not Type Safe
-	//		Always Prefer Exhaustive Cases Rather Than else Block
-
-	//  error: 'when' expression must be exhaustive, 
-	// add necessary 'BLUE' branch or 'else' branch instead
-	return when( colour ) {
-		Colour.RED 		-> "Red Colour"
-		Colour.GREEN 	-> "Green Colour"
-		Colour.BLUE  	-> "Blue Colour"
-		Colour.YELLOW  	-> "Yellow Colour"
-		Colour.ORGANGE  -> "Orange Colour"
-		Colour.UNKOWN   -> "Unknown Colour"
-	}
-}
-
-fun getColourStringAgain( colour: Colour) : String {
-	// In Kotlin when Is An Type Safe Expression
-	// In Java switch Is A Statement and It's Not Type Safe
-	//		Always Prefer Exhaustive Cases Rather Than else Block
-
-	//  error: 'when' expression must be exhaustive, 
-	// add necessary 'BLUE' branch or 'else' branch instead
-	return when( colour ) {
-		Colour.RED 		-> "Red Colour"
-		// Colour.RED == colour -> "Red Color"
-		Colour.GREEN 	-> "Green Colour"
-		Colour.BLUE  	-> "Blue Colour"
-		Colour.YELLOW  	-> "Yellow Colour"
-		Colour.ORGANGE  -> "Orange Colour"
-		Colour.UNKOWN   -> "Unknown Colour"
-	}
-}
-
-fun getColourStringConcise( colour: Colour) = when( colour ) {
-	Colour.RED 		-> "Red Colour"
-	Colour.GREEN 	-> "Green Colour"
-	Colour.BLUE  	-> "Blue Colour"
-	Colour.YELLOW  	-> "Yellow Colour"
-	Colour.ORGANGE  -> "Orange Colour"
-	Colour.UNKOWN   -> "Unknown Colour"
-}
-
-fun playWithEnumColour() {
-	println(Colour.RED)
-	println(Colour.GREEN)
-	println(Colour.BLUE)
-
-	println( getColourString(Colour.RED) )
-	println( getColourString(Colour.GREEN) )
-	println( getColourString(Colour.BLUE) )
-
-	println( getColourStringAgain(Colour.RED) )
-	println( getColourStringAgain(Colour.GREEN) )
-	println( getColourStringAgain(Colour.BLUE) )
-}
-
-fun getColourWarmth(colour: Colour) : String {
-	return when (colour) {
-		Colour.RED, Colour.ORGANGE 	-> "Hot Color"
-		Colour.BLUE, Colour.YELLOW 	-> "Neutral Color"
-		Colour.GREEN 				-> "Cold Color"
-		Colour.UNKOWN   			-> "Unknown Color"
-	}
-} 
-
-fun playWithColorWarmth() {
-	println( getColourWarmth(Colour.RED) )
-	println( getColourWarmth(Colour.GREEN) )
-	println( getColourWarmth(Colour.BLUE) )
-}
-
-fun mixColors(c1: Colour, c2: Colour) : Colour {
-	return when ( setOf(c1, c2) ) {
-		setOf(Colour.BLUE, Colour.GREEN) -> Colour.YELLOW
-		setOf(Colour.RED, Colour.YELLOW) -> Colour.ORGANGE
-		else  							 -> throw Exception("Unknown Color")
-	}
-}
-
-// Design Principle
-//		Exceptions Are Not That Exceptional Such That It Breaks Design
-fun mixColorsAgain(c1: Colour, c2: Colour) : Colour {
-	return when (setOf(c1, c2) ) {
-		setOf(Colour.BLUE, Colour.GREEN) -> Colour.YELLOW
-		setOf(Colour.RED, Colour.YELLOW) -> Colour.ORGANGE
-		else  							 -> Colour.UNKOWN
-	}
-}
-
-fun playWithMixingColors() {
-	println( mixColors(Colour.RED, Colour.YELLOW) )
-	println( mixColors(Colour.GREEN, Colour.BLUE) )
-//	println( mixColors(Colour.BLUE, Colour.YELLOW) )
-
-	println( mixColorsAgain(Colour.RED, Colour.YELLOW) )
-	println( mixColorsAgain(Colour.GREEN, Colour.BLUE) )
-	println( mixColorsAgain(Colour.BLUE, Colour.YELLOW) )
-}
-
-fun fizzBuzz(i: Int) : String {
-	return when { // Pattern Matching 
-		i % 15 == 0 	-> "FizzBuzz "
-		i % 5 == 0 		-> "Fizz "
-		i % 3 == 0 		-> "Buzz "
-		else 			-> " $i "
-	}
-}
-
-// Expression
-// LHS = RHS
-// 1. Infer Type From RHS Value
-// 2. Bind The Type With LHS
-fun fizzBuzzAgain(i: Int) = when { // Pattern Matching 
-	i % 15 == 0 	-> "FizzBuzz "
-	i % 5 == 0 		-> "Fizz "
-	i % 3 == 0 		-> "Buzz "
-	else 			-> " $i "
-}
-
-fun playWithFizzBuzz() {
-	for ( i in 1..100 ) { // Closed Interval [1, 100] 
-		print(fizzBuzz(i))
-	} 
-
-	for( i in 100 downTo 1 step 2 ) {
-		print(fizzBuzz(i))	
-	}
-}
-
-// _________________________________________________________________
-// Complete Following Experiment and Then RAISE YOUR HAND!!
-
-// import java.util.TreeMap
-fun binaryRepresentation() {
-	val binaryRep = TreeMap<Char, String>()
-
-// 	Indexing Loop
-//	for(i= 0; i < n; i ++) {}
-
-// 	Best Practice
-//  for-in Loop
-
-	for (character in 'A'..'F') { // Closed Interval ['A', 'F'] Is Ordered Set
-		val binary = Integer.toBinaryString( character.code )
-		binaryRep[ character ] = binary
-	}
-
-	for( (letter, binary) in binaryRep ) {
-		println(" $letter = $binary ")
-	}
-}
-
-// Every Expression Has Value
-// 		Value Have Type
-fun isLeter(character: Char) : Boolean = character in 'a'..'z' || character in 'A'..'Z'
-
-// error: type mismatch: inferred type is Boolean but Char was expected
-// fun isNotDigit(character: Char) : Char = character !in '0'..'9'
-
-fun isNotDigit(character: Char) = character !in '0'..'9'
-
-// Design Priciple
-// 		Flat Is Better Than Nested
-// 		Reduced Cyclomatic Complexity Is Better
-
-fun recogniseCharacter( character: Char ) : String {
-	return when(character) {
-		in '0'..'9' 			-> "It's Digit"
-		in 'a'..'z', in 'A'..'Z' 	-> "It's English Letter"
-		else 					-> "Unknown Character"
-	}
-}
-
-fun playWithCharacter() {
-	println( isLeter('A') ) 
-	println( isLeter('c') ) 
-	println( isLeter('#') ) 
-	println( isNotDigit('9') ) 
-	println( isNotDigit('A') ) 
-	println( recogniseCharacter('A') ) 
-}
-
-
-// _________________________________________________________
-// REASON FOLLOWING CODE and Then RAISE YOUR HAND!!
-
-// Complete Following sum Function
-
-// BAD CODE
-// int sum(int a, int b) {
-// 	int result = a + b;
-// 	return result;
-// }
-
-
-// int k = sum(a, b);
-// PersonRecord record[100];
-// char a[1000];
-
-// for ( ; k > 0 ; k-- ) {
-// 	printf( a[k] ) ;
-// }
-
-// // GOOD CODE : VALID SUM
-// #include <limits.h>
-
-// // Type Definition
-// //		Must Be Respected Like God And Never Mess With It!
-// // [ -32768, 32767 ]  
-// signed int sum(signed int a, signed int b) {
-// 	  signed int result = 0;
-
-// 	  // Doing Type Checking and It's Called Type Safety
-// 	  if (((b > 0) && (a > (INT_MAX - b))) ||
-// 	      ((b < 0) && (a < (INT_MIN - b)))) {
-// 	    	/* Handle/Print Error */
-// 	  } else {
-// 	    	result = a + b;
-// 	  }
-	  
-// 	  return result;
-// 	  /* ... */
-// }
-
-// _________________________________________________________________
-// _________________________________________________________________
-// _________________________________________________________________
-// _________________________________________________________________
-// _________________________________________________________________
-// _________________________________________________________________
-// Complete Following Experiment And On Completion RAISE YOUR HAND!!
-
-fun main() {
-	println("\nFunction : helloWorld")
-	helloWorld()
-
-	println("\nFunction : playWithMax")
-	playWithMax()
-
-	println("\nFunction : playWithPerson")
-	playWithPerson()
-
-	println("\nFunction : playWithRectangle")
-	playWithRectangle()
-
-	println("\nFunction : playWithEnumColour")
-	playWithEnumColour()
-
-	println("\nFunction : playWithColorWarmth")
-	playWithColorWarmth()
-
-	println("\nFunction : playWithMixingColors")
-	playWithMixingColors()
-
-	println("\nFunction : playWithFizzBuzz")
-	playWithFizzBuzz()
-
-	println("\nFunction : binaryRepresentation")
-	binaryRepresentation()
-
-	println("\nFunction : playWithCharacter")
-	playWithCharacter()
-
-	// println("\nFunction : ")
-	// println("\nFunction : ")
-	// println("\nFunction : ")
-	// println("\nFunction : ")
-	// println("\nFunction : ")
-	// println("\nFunction : ")
-	// println("\nFunction : ")
-}
-
-
-// ____________________________________________________________
-// ____________________________________________________________
-// ____________________________________________________________
-// ____________________________________________________________
-// ____________________________________________________________
-// ____________________________________________________________
-// ____________________________________________________________
-// ____________________________________________________________
-// Complete Following Code And On Completetion RAISE YOUR HAND!!!!
-
-
-
-/*
 kotlinc -include-runtime Hello.kt -d hello.jar
 java -jar nature.jar
 */
 
 //_______________________________________________________
 
-fun collectionsInKotlin() {
-	val hset 	= hashSetOf( 10, 20, 70, 100 )
-	val list 	= arrayListOf( 10, 20, 70, 100 )
-	val map 	= hashMapOf( 1 to "One", 10 to "Ten")
+// Language Design Principles
+//		Brings Most Common Practices As Part Of Language Design
 
-	println( hset.javaClass )
-	println( list.javaClass )
-	println( map.javaClass )
+// BEST PRACTICE
+//		Design Towards Immutability Rather Mutability
 
-	val names = listOf("Gabbar Singh", "Basanti", "Samba", "Jay", "Veeru")
-	println( names.javaClass )
+// Corollary
+//		Classes Are Not Meant To Be Inherited Must Be Final
+//
+
+// 03KotlinClasses.kt:13:16: error: this type is final, so it cannot be extended.
+// class Button : View() {
+//                ^^^^
+// 03KotlinClasses.kt:14:6: error: 'click' hides member of supertype 'View' and needs an 'override' modifier.
+// 	fun click() = println("Button: Clicked!...")
+
+// In Kotlin
+//		Classes Are Final By Default
+//			Final Classes Can't Inherited!
+//		Members Are Final By Default
+
+// In C++/Java
+//		Classes Are Open By Default
+//		Members Are Open By Default
+
+// class View {
+	// error: 'click' in 'View' is final and cannot be overridden.
+open class View {
+	open fun click() = println("View: Clicked!...")
+	open fun magic() = println("View: Magic!...")
+}
+
+class Button : View() {
+	override fun click() = println("Button: Clicked!...")
+	override fun magic() = println("Button: Magic!...")
+	fun doFun() = println("Button: doFun!...")
+}
+
+// Adding Functionality
+// Using Extention Functions
+//		Extension Function Doesn't Participates In Overridding
+fun View.showOff() 		= println("View: showOff!...")
+fun Button.showOff() 	= println("Button: showOff!...")
+
+fun playWithInheritance() {
+	// val v: View = View()
+	val v = View()
+	v.click()
+	v.magic()
+	v.showOff()
+
+	// val b: Button = Button()
+	val b = Button()
+	b.click()
+	b.magic()
+	b.showOff()
+	b.doFun()
+
+	// Object Can Have Multiple Types
+	//		va Object Has Two Types Button and View Types
+	// 		Child Call Object Can Be Stored In Parent Class Reference
+	val va: View = Button() 
+	va.click()
+	va.magic()
+	va.showOff()
+	// va.doFun() // error: unresolved reference 'doFun'
+
+	val bringKiduBack = va as Button
+	bringKiduBack.doFun()
+}
+
+//_____________________________________________________
+// EXPERIMENT FOLLOWING CODE! MOMENT DONE RAISE FLAG!!!
+
+interface Clickable2 {
+    fun click()
+}
+
+class Button2 : Clickable2 {
+    override fun click() = println("I was clicked")
+}
+
+fun functionButtonClick() {
+    Button2().click()
+}
+
+
+//_____________________________________________________
+// EXPERIMENT FOLLOWING CODE! MOMENT DONE RAISE FLAG!!!
+
+// Creating Type Clickable3
+// Abstract Type [Mathematical]
+//		Operation = { click(), showOff() }
+//		Range = { }
+interface Clickable3 {
+    fun click()
+    // Default Implementation
+    fun showOff() = println("I'm clickable!") 
+}
+
+// Compiler Generate Following Interface and Class
+//		To Work With < Java8
+// interface Clickable3 {
+//     fun click()
+//     fun showOff()
+// }
+
+// class Clickable3Class implements Clickable3 {
+//     fun click()
+//     fun showOff() = println("I'm clickable!")
+// }
+
+// Creating Type Clickable3
+// Abstract Type [Mathematical]
+//		Operation = { click(), showOff() }
+//		Range = { }
+interface Focusable3 {
+    fun setFocus(b: Boolean) =
+        println("I ${if (b) "got" else "lost"} focus.")
+
+    fun showOff() = println("I'm focusable!")
+}
+
+class Button3 : Clickable3, Focusable3 {
+    override fun click() = println("I was clicked")
+
+    override fun showOff() {
+    	// super.showOff()
+        super<Clickable3>.showOff()
+        super<Focusable3>.showOff()
+    }
+}
+
+fun functionButtonClickableAndFocusable() {
+    val button = Button3()
+    button.showOff()
+    button.setFocus(true)
+    button.click()
+}
+
+//_____________________________________________________
+// EXPERIMENT FOLLOWING CODE! MOMENT DONE RAISE FLAG!!!
+
+enum class Colour {
+	RED, GREEN, BLUE, YELLOW, ORANGE, UKNOWN
+}
+
+fun mixColours(c1 : Colour, c2: Colour ) = when ( setOf(c1, c2) ) {
+	setOf( Colour.BLUE, Colour.GREEN ) 	-> Colour.YELLOW
+	setOf( Colour.RED, Colour.YELLOW )  -> Colour.ORANGE
+	// else -> throw Exception("Dirty Colour!")
+	// else -> "Unknown Colour"
+	else -> Colour.UKNOWN
+}
+
+fun playWithColourMixing() {
+	println( mixColours( Colour.GREEN, Colour.BLUE ) )
+	println( mixColours( Colour.YELLOW, Colour.RED ) )
+	// println( mixColours( Colour.GREEN, Colour.RED ) )	
+}
+
+//_____________________________________________________
+// EXPERIMENT FOLLOWING CODE! MOMENT DONE RAISE FLAG!!!
+
+interface Expr
+class Num(val value: Int) : Expr
+class Sum(val left: Expr, val right: Expr) : Expr 
+
+fun evaluate(e: Expr) : Int = when(e) {
+	is Num -> e.value
+	is Sum -> evaluate(e.left) + evaluate(e.right)
+	else -> throw IllegalArgumentException("Unknown Expression")
+}
+
+fun playWithEvaluate() {
+	// 100 + 200
+	println( evaluate(Sum( Num(100), Num(200) ) ) )
+
+	// (100 + 200) + 99
+    println( evaluate(Sum(Sum(Num(100), Num(200)), Num(99))))
+}
+
+//_____________________________________________________
+// EXPERIMENT FOLLOWING CODE! MOMENT DONE RAISE FLAG!!!
+
+sealed class Expr1 {
+	class Num(val value: Int) : Expr1()
+	class Sum(val left: Expr1 , val right: Expr1 ) : Expr1() 
+}
+
+// class Sub(val left: Expr1 , val right: Expr1 ) : Expr1() 
+
+fun evaluateAgain( e: Expr1 ) : Int = when(e) {
+	is Expr1.Num -> e.value
+	is Expr1.Sum -> evaluateAgain(e.left) + evaluateAgain(e.right)
+	// else -> throw IllegalArgumentException("Unknown Expression")
+}
+
+fun playWithEvaluateAgain() {
+	// 100 + 200
+	println( evaluateAgain( Expr1.Sum( Expr1.Num(100), Expr1.Num(200) ) ) )
+
+	// (100 + 200) + 99
+    println( evaluateAgain( Expr1.Sum( Expr1.Sum( Expr1.Num(100), 
+    	Expr1.Num(200)), Expr1.Num(99))))
+}
+
+//_________________________________________________________
+
+enum class Color(val r: Int, val g: Int, val b: Int ) {
+	RED( 255, 0, 0 ), GREEN( 0, 255, 0 ), BLUE(0, 0, 255 );
+
+	// Member Function
+	fun rgb() = ( r * 256 + g ) * 256 + b
+}
+
+
+//_________________________________________________________
+// DESIGN PRINCIPLE
+//		Design Towards Determinism Rather Than Non Determinism
+
+// Assume Library Code
+class File(name: String)
+class DataSource( source: String )
+
+sealed interface Error
+sealed class IOError() : Error
+class FileReadError( val file: File ) : IOError() 
+class DatabaseError( val source: DataSource ) : IOError()
+
+// Assume Library Code Consumer
+fun handleError( e: Error ) = when( e ) {
+	is FileReadError -> { println("Error While File Reading!") }
+	is DatabaseError -> { println("Error While Database Dealing!") }
+	// else -> 
+	//	error: 'when' expression must be exhaustive. 
+	//			Add the 'is DatabaseError' branch or an 'else' branch.
+}
+
+fun playWithHandleError() {
+	val file = File(name = "data.txt")
+	val source = DataSource( source = "employee.db")
+	
+	val fileReadError = FileReadError(file)
+	val databaseError = DatabaseError(source)
+
+	handleError( fileReadError )
+	handleError( databaseError )
+}
+
+//_____________________________________________________
+
+// DEFININING STATE MACHINE
+//_____________________________________________________
+
+/*
+sealed class UIState {
+    data object Loading : UIState()
+    data class Success(val data: String) : UIState()
+    data class Error(val exception: Exception) : UIState()
+}
+
+fun updateUI(state: UIState) {
+    when (state) {
+        is UIState.Loading 	-> showLoadingIndicator()
+        is UIState.Success 	-> showData(state.data)
+        is UIState.Error 	-> showError(state.exception)
+    }
+}
+
+fun showLoadingIndicator() 	= println("UIState Loading...")
+fun showData( val state: UIState.Success ) 	= println("UIState Success: $state")
+fun showError( val state: UIState.Error ) 	= println("UIState Error: $state")
+
+*/
+
+//_______________________________________________________
+
+// BEST PRACTICE
+//		FUNCTION/METHOD/CONSTRUCTOR POLYMORPHISM
+//			1. Always Prefer Default Arguments Over Function/Method/Constructor Overloading
+//					Placed Arguments Than Named Arguments/Arrays Than Maps/Dictitionary
+
+//			Constructor With Default Arugments
+//	Default Arguments
+//		Means Arguments With Default Value
+class User( val nickName: String, val isSubscribed: Boolean = true )
+
+fun playWithUser() {
+	val basanti = User("Basanti")
+	println( basanti.nickName )
+	println( basanti.isSubscribed )
+
+	val gabbar = User("Gabbar Singh", false )
+	println( gabbar.nickName )
+	println( gabbar.isSubscribed )
+}
+
+// Function Arguments Are Immutable By Default
+// fun functionFullName( val firstName: String, var middleName: String = "", lastName: String = "" ): String {
+
+// Polymorphic Function
+// 		Using Mechanims : Default Arguments
+fun functionFullName( firstName: String, middleName: String = "", lastName: String = "" ): String {
+	return firstName + " " + middleName + " " + lastName
+}
+
+// Polymorphic Function
+// 		Using Mechanims : Function Overloading
+fun getFullName( firstName: String ): String {
+	return firstName
+}
+
+fun getFullName( firstName: String, middleName: String ): String {
+	return firstName + " " + middleName
+}
+
+// fun getFullName( firstName: String, lastName: String ): String {
+// 	return firstName + " " + lastName
+// }
+
+fun getFullName( firstName: String, middleName: String, lastName: String): String {
+	return firstName + " " + middleName + " " + lastName
+}
+
+fun playWithFullName() {
+	// Function Call With Labels/Named Arguments
+	var gabbar = functionFullName( firstName = "Gabbar " )
+	println( gabbar )
+
+	gabbar = functionFullName( firstName = "Gabbar", lastName = "Singh ")
+	println( gabbar )
+
+	gabbar = functionFullName( firstName = "Gabbar", middleName = "Singh", lastName = "Dakku")
+	println( gabbar )	
+
+	// Function Call With Placed Arguments
+	gabbar = functionFullName( "Gabbar", "Singh","Dakku")
+	println( gabbar )	
+
+	gabbar = getFullName( firstName = "Gabbar " )
+	println( gabbar )
+
+	// gabbar = getFullName( firstName = "Gabbar", lastName = "Singh ")
+	// println( gabbar )
+
+	gabbar = getFullName( firstName = "Gabbar", middleName = "Singh", lastName = "Dakku")
+	println( gabbar )	
+}
+
+
+//_______________________________________________________
+
+fun getFacebookName( accountID: Int ) = "FB:$accountID"
+
+// Interface With Property Members
+//		Interfaces Are Abstract Type [Mathematicall]
+//		Inferfaces Should Be Used For Forcing Contract In System
+//		Should Be Last Choice In Design and Should Be Used In Rarest Rare Scenrios
+//		Rather Properties Should Be Part Of Concrete
+
+interface User1 {
+	 // error: property initializers in interfaces are prohibited.
+	// val nickName : String = "Unknown"
+	val nickName : String // Defining Contract : Property Name And Accessor	
+}
+
+// error: 'nickName' hides member of supertype 'User1' and needs an 'override' modifier.
+// class PrivateUser( val nickName : String ) : User1
+
+// Overriding Properties Means Overriding Accessor Methods i.e. Getter/Setter
+class PrivateUser( override val nickName : String ) : User1
+
+class SubscribingUser( val email: String ) : User1 {
+	override val nickName : String
+		get() = email.substringBefore('@')
+}
+
+class FacebookUser( val email: String ) : User1 {
+	override val nickName = getFacebookName( 420 )
+}
+
+fun playWithInterfaceProperties() {
+	val thakur = PrivateUser("gabbar@ramgrah.com")
+	println( thakur.nickName ) // thakur.getNicName()
+
+	val basanti = SubscribingUser("gabbar@ramgrah.com")
+	println( basanti.nickName )
+
+	val gabbar = FacebookUser( "420@ramgrah.com" )
+	println( gabbar.nickName )
 }
 
 //_______________________________________________________
 
-// T Is Type Placeholder
-//		T Will Get Substituted With Type At Compile Time
+// Every Property Have At Most Three Things
+//		Member Variable/Backing Field
+//		Getter and Setter
 
-fun <T> joinToString(
-	collection: Collection<T>,
-	separator: String,
-	prefix: String,
-	postfix: String
-) : String {
+// Abstract Types = { Operation, {} }
+// 		Hence field Can Be Accessed/Stored In Interfaces
 
-	val result = StringBuilder( prefix )
+interface User2 {
+	val email: String
+	val nickName: String
+		get() = email.substringBefore('@') // Getter Contract With Default Implementation
 
-	for( (index, element) in collection.withIndex() ) {
-		if ( index > 0 ) result.append( separator )
-		result.append( element )
-	}
-	result.append( postfix )
-	return result.toString()
+	var name: String
+		// Getter/Setter Contract With Default Implementation
+		// get() = "Unknown!"
+		get() {
+			// return field
+			return "Unknown!"
+		}
+
+		set( value ) {
+			// Here Backing field Is Member Variable For Proeprty name
+			// field = value // error: property in interface cannot have a backing field
+			println("Setter Called...: $value ")
+		}
 }
 
-/*
-// Compiler Will Generate Following Code
-//		By Substiting T Place Holder
-fun joinToStringString(
-	collection: Collection<String>,
-	separator: String,
-	prefix: String,
-	postfix: String
-) : String {
-
-	val result = StringBuilder( prefix )
-
-	for( (index, element) in collection.withIndex() ) {
-		if ( index > 0 ) result.append( separator )
-		result.append( element )
-	}
-	result.append( postfix )
-	return result.toString()
+class Employee() : User2 {
+	// override val email: String = "gabbar@ramgrah.com"
+	override val email: String
+		get() = "gabbar@ramgrah.com"
 }
 
-fun joinToStringInteger(
-	collection: Collection<Integer>,
-	separator: String,
-	prefix: String,
-	postfix: String
-) : String {
+fun playWithEmployee() {
+	val gabbar = Employee()
+	println( gabbar.email )
+	println( gabbar.nickName )
+	println( gabbar.name )
 
-	val result = StringBuilder( prefix )
-
-	for( (index, element) in collection.withIndex() ) {
-		if ( index > 0 ) result.append( separator )
-		result.append( element )
-	}
-	result.append( postfix )
-	return result.toString()
-}
-*/
-
-
-fun playWithJoinToString() {
-	//			ArrayList<String>
-	val names = listOf("Gabbar Singh", "Basanti", "Samba", "Jay", "Veeru")
-	println( joinToString( names, " # ", "[", "]") )
-
-	//			HashSet<Integer>
-	var numbers = hashSetOf( 10, 20, 30, 40, 50 )
-	println( joinToString( numbers, " # ", "[", "]") )
+	gabbar.name = "Gabbar Singh"
+	println( gabbar.name )	
 }
 
+//_______________________________________________________
+
+// Type = { Operation, Range }
+// Concrete Class
+//		Concrete Classes Can Have Instances/Object
+//		Object = { State, MetaState }
+//			Here MetaState State About State: Minimum MetaState is Message Handling
+
+class User3( val name: String ) {
+	var address: String = "Unknown!"
+		get() {
+			println("Getter Called...")
+			return field
+		}
+		set ( value: String ) {
+			println("Setter Called...: $field")			
+			field = value
+			println("Setter Called...: $field")
+		}
+}
+
+fun playWithUser3() {
+	val gabbar = User3("Gabbar Singh")
+	println( gabbar.name )
+	println( gabbar.address )
+
+	gabbar.address = "Ramgarh Ke Sholay!"
+	println( gabbar.address )
+}
+
+//_______________________________________________________
+
+class User4( ) {
+	var name: String = "Unknown!"
+	var address: String = "Unspecified!"
+		get() {
+			println("Getter Called...")
+			return field
+		}
+		set ( value: String ) {
+			println("Setter Called...: $field")			
+			field = value
+			println("Setter Called...: $field")
+		}
+}
+
+fun playWithUser4() {
+	val gabbar = User4()
+	println( gabbar.name )
+	println( gabbar.address )
+
+	gabbar.name = "Gabbar Singh"
+	gabbar.address = "Ramgarh Ke Sholay!"
+	println( gabbar.name )
+	println( gabbar.address )	
+}
+
+
+//_______________________________________________________
 //_______________________________________________________
 //_______________________________________________________
 //_______________________________________________________
 //_______________________________________________________
 
 fun main() {
-	println("\nFunction: collectionsInKotlin")
-	collectionsInKotlin()
+	println("\nFunction: playWithInheritance")
+	playWithInheritance()
 
-	println("\nFunction: playWithJoinToString")
-	playWithJoinToString()
+	println("\nFunction: playWithUser")
+	playWithUser()
 
+	println("\nFunction: playWithFullName")
+	playWithFullName()
+
+	println("\nFunction: playWithEmployee")
+	playWithEmployee()
+
+	println("\nFunction: playWithUser3")
+	playWithUser3()
+
+	println("\nFunction: playWithUser4")
+	playWithUser4()
+	
 	// println("\nFunction: ")	
 	// println("\nFunction: ")
-	// println("\nFunction: ")
 	// println("\nFunction: ")	
 	// println("\nFunction: ")
-	// println("\nFunction: ")
 	// println("\nFunction: ")	
-	// println("\nFunction: ")
 	// println("\nFunction: ")
 	// println("\nFunction: ")	
 }
-
 
 
 
