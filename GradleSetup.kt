@@ -24,6 +24,14 @@ __________________________________________________________________________
 
 				export PATH=$PATH:$JAVA_HOME/bin/:$KOTLIN_PATH:$GRADLE_PATH
 
+			To Reload/ReApply Changed .profile Or .bash_profile Configuration
+				Run Following Command In Terminal
+					 . ~/.profile
+					 . ~/.bash_profile
+
+				Kill Terminal and Relaunch
+					Changed Configuration Will Be Reloaded
+
 			In Windows Add In Environment Variables
 				Modify PATH Variable
 					NOTE:: Please convert Following Path To w.r.t. Windows Notations
