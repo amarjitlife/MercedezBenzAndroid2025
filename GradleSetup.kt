@@ -99,6 +99,58 @@ __________________________________________________________________________
 		gradle run
 
 		Should Run Hello World Program Successfully!
+
 __________________________________________________________________________
 
-		
+Creating Coroutine
+__________________________________________________________________________
+
+
+1. Import Coroutine Library In App.kt File
+
+	import kotlinx.coroutines.*
+
+2. Add Dependency For Coroutine Library
+	 In File build.grade.kts Add Following
+
+	 dependencies {
+	    // This dependency is used by the application.
+	    implementation(libs.guava)
+	    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2") // For general coroutine functionality
+	    // Add other coroutine modules as needed, e.g., kotlinx-coroutines-test for testing
+	}
+
+3. Write Your Code in App.kt File
+
+	import kotlinx.coroutines.*
+
+
+	// Concurrently executes both sections
+	suspend fun doWorld() = coroutineScope { // this: CoroutineScope
+
+	    launch { // C1 : Child
+	        delay(2000L)
+	        println("World 2")
+	    }
+
+	    launch { // C2: Child
+	        delay(1000L)
+	        println("World 1")
+	    }
+	    println("Hello")
+	}
+
+	// Sequentially executes doWorld followed by "Done"
+	fun playWithCoroutines3() = runBlocking { // Run Blocking Coroutine : Parent
+	    launch { // Run Blocking Coroutine : Parent
+	        doWorld()
+	        println("Done")
+	    }
+	}
+
+
+__________________________________________________________________________
+__________________________________________________________________________
+
+
+
